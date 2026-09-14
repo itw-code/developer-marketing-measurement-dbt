@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: int_adstock_and_saturation
+    description: "Intermediate model applying geometric adstock carryover (alpha=0.70) and Hill function saturation curves."
+    columns:
+      - name: spend_date
+        description: "Date of spend."
+      - name: channel
+        description: "Acquisition channel."
+      - name: spend_usd
+        description: "Raw daily spend."
+      - name: spend_adstocked
+        description: "Adstock transformed spend capturing residual carryover effects."
+      - name: saturation_index
+        description: "Hill function saturation index between 0.0 and 1.0."
+      - name: mmm_estimated_conversions
+        description: "Calibrated econometrically estimated incremental conversions."
+
+  - name: int_attribution_paths
+    description: "Intermediate touchpoint attribution weighting model for converted paying projects."
+    columns:
+      - name: account_id
+        description: "Converted developer account ID."
+      - name: touch_id
+        description: "Touchpoint event ID."
+      - name: first_touch_weight
+        description: "First-touch attribution weight (1.0 for initial touch)."
+      - name: last_touch_weight
+        description: "Last-touch attribution weight (1.0 for final converting touch)."
+      - name: linear_weight
+        description: "Equal-split linear attribution weight."
+      - name: time_decay_weight
+        description: "Exponential 7-day half-life time-decay attribution weight."
+
+  - name: int_geo_experiment_clusters
+    description: "Matched-market geo-testing model tracking treatment, control, and holdout performance."
+    columns:
+      - name: signup_date
+        description: "Signup calendar date."
+      - name: channel
+        description: "Marketing channel."
+      - name: region
+        description: "Geographic market."
+      - name: experiment_cohort
+        description: "Cluster assignment: treatment, control, or holdout."
+
+  - name: int_developer_lifecycle_states
+    description: "Developer lifecycle states, time-to-first-query activation speed, and feature adoption taxonomy."
+    columns:
+      - name: account_id
+        description: "Developer account ID."
+      - name: feature_adoption_tier
+        description: "Feature adoption: AI Vector Platform, Full Stack BaaS, Core Features, Raw Postgres DB."
+      - name: activation_speed
+        description: "Speed category: Rapid Activation (<15m), Standard Activation, or Slow."
+      - name: usage_tier
+        description: "Usage consumption category: High, Moderate, or Light."

@@ -1,0 +1,105 @@
+version: 2
+
+models:
+  - name: stg_github_telemetry
+    description: "Staging model for Supabase GitHub repository metrics fetched via public REST API."
+    columns:
+      - name: repo_name
+        description: "Canonical repository identifier (supabase/supabase)."
+        data_tests:
+          - not_null
+      - name: stars_count
+        description: "Total GitHub star count."
+        data_tests:
+          - not_null
+          - non_negative
+      - name: forks_count
+        description: "Total GitHub fork count."
+      - name: open_issues_count
+        description: "Open issue backlog."
+      - name: watchers_count
+        description: "Repository subscriber count."
+      - name: fetched_at
+        description: "Timestamp of live API ingestion."
+
+  - name: stg_hackernews_buzz
+    description: "Staging model for Hacker News developer discussions fetched via Algolia API."
+    columns:
+      - name: story_id
+        description: "Unique story identifier."
+        data_tests:
+          - not_null
+      - name: title
+        description: "Post title on Hacker News."
+      - name: points
+        description: "Upvote points."
+        data_tests:
+          - non_negative
+      - name: num_comments
+        description: "Discussion comment count."
+      - name: buzz_score
+        description: "Weighted engagement score (points * 1.5 + comments * 2.0)."
+
+  - name: stg_fx_rates
+    description: "Daily foreign exchange rates from Frankfurter ECB API for multi-currency spend normalization."
+    columns:
+      - name: base_currency
+        description: "Base currency (USD)."
+      - name: quote_currency
+        description: "Quote currency (EUR, GBP, IDR, CAD)."
+      - name: exchange_rate
+        description: "Market exchange rate."
+      - name: rate_to_usd
+        description: "Multiplier to normalize local spend to USD."
+
+  - name: stg_marketing_ad_spend
+    description: "Normalized daily marketing campaign spend across paid and organic channels."
+    columns:
+      - name: spend_date
+        description: "Spend transaction date."
+        data_tests:
+          - not_null
+      - name: channel
+        description: "Acquisition channel (paid_search, paid_social, developer_sponsorship, community_events, organic_direct)."
+      - name: region
+        description: "Geographic market region (US-East, US-West, EU-Central, APAC-SG, LATAM)."
+      - name: spend_usd
+        description: "Daily spend in USD."
+        data_tests:
+          - not_null
+          - non_negative
+      - name: impressions
+        description: "Ad impressions delivered."
+      - name: clicks
+        description: "Link clicks recorded."
+      - name: platform_conversions
+        description: "Conversions claimed by the ad platform."
+      - name: cpc_usd
+        description: "Cost per click in USD."
+      - name: ctr_pct
+        description: "Click-through rate percentage."
+
+  - name: stg_developer_plg_events
+    description: "Staging model joining developer accounts with project telemetry and usage metrics."
+    columns:
+      - name: account_id
+        description: "Primary developer account ID."
+        data_tests:
+          - not_null
+          - unique
+      - name: project_id
+        description: "Provisioned database project ID."
+      - name: signup_date
+        description: "Account creation date."
+      - name: channel
+        description: "Initial acquisition channel."
+      - name: region
+        description: "Account region."
+      - name: is_holdout
+        description: "Universal holdout flag for causal incrementality measurement."
+      - name: is_pro_upgrade
+        description: "Whether the project converted to paid Pro tier ($25/mo)."
+      - name: compute_hours
+        description: "Monthly database compute hours."
+      - name: monthly_invoice_usd
+        description: "Billed monthly invoice amount."

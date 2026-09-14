@@ -1,0 +1,7 @@
+dev_marketing_measurement:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: dev_measurement.duckdb
+      threads: 4

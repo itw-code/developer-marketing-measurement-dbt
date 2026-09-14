@@ -1,0 +1,97 @@
+version: 2
+
+models:
+  - name: fct_marketing_triangulation_daily
+    description: "Flagship measurement mart comparing platform-reported metrics against MTA, MMM, and causal geo-lift."
+    columns:
+      - name: date_day
+        description: "Calendar date."
+        data_tests:
+          - not_null
+      - name: channel
+        description: "Marketing channel."
+        data_tests:
+          - not_null
+      - name: spend_usd
+        description: "Spend in USD."
+        data_tests:
+          - non_negative
+      - name: platform_reported_conversions
+        description: "Conversions claimed by ad platform self-attribution networks."
+      - name: mta_first_touch_conversions
+        description: "First-touch multi-touch attributed conversions."
+      - name: mta_last_touch_conversions
+        description: "Last-touch multi-touch attributed conversions."
+      - name: mmm_estimated_incremental_conversions
+        description: "Causal conversions estimated from adstock & saturation MMM."
+      - name: geo_lift_conversions
+        description: "Observed incremental lift from matched-market geo experiments."
+      - name: platform_overreporting_bias_pct
+        description: "Platform over-reporting bias percentage ((Platform - Causal) / Causal * 100)."
+      - name: blended_cac_usd
+        description: "Blended CAC based on platform claims."
+      - name: incremental_cac_usd
+        description: "Defensible incremental CAC based on causal conversions."
+      - name: incremental_roas
+        description: "Incremental ROAS (Incremental Revenue / Spend)."
+
+  - name: fct_channel_efficiency_daily
+    description: "Daily channel efficiency, unit economics, and payback period tracking."
+    columns:
+      - name: date_day
+        description: "Calendar date."
+      - name: channel
+        description: "Marketing channel."
+      - name: spend_usd
+        description: "Spend in USD."
+        data_tests:
+          - non_negative
+      - name: cpc_usd
+        description: "Cost per click."
+      - name: ctr_pct
+        description: "Click-through rate."
+      - name: blended_cac_usd
+        description: "Customer acquisition cost per Pro upgrade."
+      - name: payback_period_months
+        description: "Months to recover CAC based on $25 monthly ARPU."
+
+  - name: fct_developer_cohort_retention
+    description: "Weekly developer project retention decay and conversion waterfalls."
+    columns:
+      - name: cohort_week
+        description: "Cohort signup week."
+      - name: channel
+        description: "Acquisition channel."
+      - name: total_cohort_signups
+        description: "Total accounts created in cohort week."
+      - name: day_30_retention_rate_pct
+        description: "Percentage of projects active at Day 30."
+      - name: pro_conversion_rate_pct
+        description: "Percentage of projects upgraded to Pro tier."
+
+  - name: dim_campaigns
+    description: "Dimension table mapping campaigns to channel taxonomy and target developer personas."
+    columns:
+      - name: campaign_id
+        description: "Campaign identifier."
+        data_tests:
+          - not_null
+          - unique
+      - name: channel
+        description: "Marketing channel."
+      - name: channel_category
+        description: "Channel category (Paid Inbound, Paid Outbound, DevRel, etc.)."
+      - name: target_developer_persona
+        description: "Target persona: Indie Hacker, Fast-Growing Startup Lead, Enterprise Architect."
+
+  - name: dim_developer_projects
+    description: "Dimension table of developer accounts and database project configurations."
+    columns:
+      - name: project_id
+        description: "Unique database project ID."
+        data_tests:
+          - not_null
+      - name: account_id
+        description: "Account owner ID."
+      - name: feature_adoption_tier
+        description: "Feature adoption tier (AI Vector Platform, Full Stack BaaS, Core Features, Raw Postgres DB)."
