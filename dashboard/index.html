@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Marketing Measurement & Attribution Triangulation</title>
+  <!-- Tailwind CSS & Chart.js -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Load Local Data for Zero-CORS viewing -->
+  <script src="data.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            supabase: {
+              DEFAULT: '#3ecf8e',
+              dark: '#10b981',
+              darker: '#059669',
+              bg: '#0c1017',
+              panel: '#151c28',
+              card: '#1b2434',
+              border: '#263347'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0c1017;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #151c28;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #263347;
+      border-radius: 3px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #3ecf8e;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 custom-scroll">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="max-w-7xl mx-auto mb-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-supabase-border pb-6">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-mono font-bold text-lg">
+            ⚡
+          </div>
+          <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">
+            Developer Marketing Measurement &amp; Attribution Triangulation
+          </h1>
+        </div>
+        <p class="text-sm md:text-base text-slate-400 max-w-3xl">
+          An open-source causal analytics engineering pipeline reconciling Platform Claims, Multi-Touch Attribution (MTA), Media Mix Modeling (MMM), and Matched-Market Geo-Lift for Developer BaaS.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2.5">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/60 border border-emerald-500/40 text-emerald-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          41 dbt Nodes • 20 Invariants • 0.000000 Drift
+        </span>
+        <a href="https://github.com/itw-code/developer-marketing-measurement-dbt" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="max-w-7xl mx-auto space-y-8">
+
+    <!-- KPI SUMMARY GRID -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="kpi-grid">
+      <!-- KPI 1 -->
+      <div class="bg-supabase-panel border border-supabase-border rounded-xl p-5 shadow-lg relative overflow-hidden">
+        <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-1">
+          <span>PLATFORM CLAIM VS CAUSAL</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30" id="kpi-bias">
+            +698% BIAS
+          </span>
+        </div>
+        <div class="flex items-baseline gap-2 mt-2">
+          <div class="text-3xl font-extrabold text-white" id="kpi-causal">--</div>
+          <div class="text-sm font-medium text-slate-400">causal convs</div>
+        </div>
+        <div class="text-xs text-slate-500 mt-2 flex items-center gap-1.5">
+          <span>Claimed by ad networks:</span>
+          <span class="text-slate-300 font-semibold line-through" id="kpi-platform">--</span>
+        </div>
+      </div>
+
+      <!-- KPI 2 -->
+      <div class="bg-supabase-panel border border-supabase-border rounded-xl p-5 shadow-lg">
+        <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-1">
+          <span>INCREMENTAL CAC</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">
+            DEFENSIBLE
+          </span>
+        </div>
+        <div class="flex items-baseline gap-2 mt-2">
+          <div class="text-3xl font-extrabold text-emerald-400" id="kpi-inc-cac">--</div>
+          <div class="text-sm font-medium text-slate-400">per Pro upgrade</div>
+        </div>
+        <div class="text-xs text-slate-500 mt-2 flex items-center gap-1.5">
+          <span>Claimed blended CAC:</span>
+          <span class="text-slate-300 font-semibold" id="kpi-blended-cac">--</span>
+        </div>
+      </div>
+
+      <!-- KPI 3 -->
+      <div class="bg-supabase-panel border border-supabase-border rounded-xl p-5 shadow-lg">
+        <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-1">
+          <span>MARGINAL ROAS</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            6M LTV BASIS
+          </span>
+        </div>
+        <div class="flex items-baseline gap-2 mt-2">
+          <div class="text-3xl font-extrabold text-white" id="kpi-roas">--</div>
+          <div class="text-sm font-medium text-emerald-400 font-bold">return ratio</div>
+        </div>
+        <div class="text-xs text-slate-500 mt-2">
+          Calibrated via adstock carryover &amp; Hill saturation
+        </div>
+      </div>
+
+      <!-- KPI 4 -->
+      <div class="bg-supabase-panel border border-supabase-border rounded-xl p-5 shadow-lg">
+        <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-1">
+          <span>EST. PAYBACK PERIOD</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30">
+            $25 MRR TIER
+          </span>
+        </div>
+        <div class="flex items-baseline gap-2 mt-2">
+          <div class="text-3xl font-extrabold text-white" id="kpi-payback">--</div>
+          <div class="text-sm font-medium text-slate-400">months</div>
+        </div>
+        <div class="text-xs text-slate-500 mt-2">
+          Project unit economics recovery timeline
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARTS ROW 1 -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- CHART 1: TRIANGULATION COMPARISON -->
+      <div class="bg-supabase-panel border border-supabase-border rounded-xl p-6 shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span>Attribution Triangulation by Channel</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Comparing Platform Claims vs MTA (First/Last Touch) vs Causal MMM</p>
+          </div>
+          <span class="text-xs font-mono text-slate-500">fct_marketing_triangulation</span>
+        </div>
+        <div class="relative h-72">
+          <canvas id="triangulationChart"></canvas>
+        </div>
+      </div>
+
+      <!-- CHART 2: HILL FUNCTION SATURATION CURVE -->
+      <div class="bg-supabase-panel border border-supabase-border rounded-xl p-6 shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span>Hill Function Saturation &amp; Diminishing Returns</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Model: S² / (K² + S²), Half-Saturation K = $2,500</p>
+          </div>
+          <span class="text-xs font-mono text-slate-500">int_adstock_and_saturation</span>
+        </div>
+        <div class="relative h-72">
+          <canvas id="saturationChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARTS ROW 2: RETENTION & LIVE APIS -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- CHART 3: COHORT RETENTION -->
+      <div class="lg:col-span-2 bg-supabase-panel border border-supabase-border rounded-xl p-6 shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-lg font-bold text-white">Developer Project Retention Decay Waterfall</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Weekly Cohort Survivability (Day 7 vs Day 30 Retention &amp; Paid Conversion %)</p>
+          </div>
+          <span class="text-xs font-mono text-slate-500">fct_developer_cohort_retention</span>
+        </div>
+        <div class="relative h-64">
+          <canvas id="retentionChart"></canvas>
+        </div>
+      </div>
+
+      <!-- LIVE API TELEMETRY PANEL -->
+      <div class="bg-supabase-panel border border-supabase-border rounded-xl p-6 shadow-lg flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between border-b border-supabase-border pb-3 mb-4">
+            <h2 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Live API Ingestion Telemetry
+            </h2>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">Live Free APIs</span>
+          </div>
+
+          <!-- GITHUB STATS -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-400">Supabase GitHub Stars:</span>
+              <span class="font-mono font-bold text-emerald-400" id="live-stars">109,204</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-400">GitHub Forks:</span>
+              <span class="font-mono font-semibold text-white" id="live-forks">13,765</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-400">Open Issues:</span>
+              <span class="font-mono font-semibold text-slate-300" id="live-issues">1,139</span>
+            </div>
+          </div>
+
+          <!-- HACKER NEWS BUZZ -->
+          <div class="mt-5 border-t border-supabase-border pt-4">
+            <div class="text-xs font-semibold text-slate-300 mb-2">Top Hacker News Developer Buzz:</div>
+            <div class="space-y-2 text-xs" id="hn-stories-list">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-supabase-border flex items-center justify-between text-[11px] text-slate-500 font-mono">
+          <span>Ingested via:</span>
+          <span>GitHub + Algolia + Frankfurter</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE DATA EXPLORER TABLE -->
+    <section class="bg-supabase-panel border border-supabase-border rounded-xl p-6 shadow-lg">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+        <div>
+          <h2 class="text-lg font-bold text-white">Daily Triangulation Explorer</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Filter and audit multi-channel reconciliation telemetry</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <label for="channelFilter" class="text-xs font-medium text-slate-400">Filter Channel:</label>
+          <select id="channelFilter" class="bg-supabase-card border border-supabase-border rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+            <option value="all">All Channels</option>
+            <option value="paid_search">paid_search</option>
+            <option value="paid_social">paid_social</option>
+            <option value="developer_sponsorship">developer_sponsorship</option>
+            <option value="community_events">community_events</option>
+            <option value="organic_direct">organic_direct</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto custom-scroll rounded-lg border border-supabase-border max-h-96">
+        <table class="w-full text-left text-xs font-mono">
+          <thead class="bg-supabase-card text-slate-400 sticky top-0 border-b border-supabase-border z-10">
+            <tr>
+              <th class="p-3">Date</th>
+              <th class="p-3">Channel</th>
+              <th class="p-3 text-right">Spend (USD)</th>
+              <th class="p-3 text-right">Platform Claim</th>
+              <th class="p-3 text-right">MTA First</th>
+              <th class="p-3 text-right">MTA Last</th>
+              <th class="p-3 text-right text-emerald-400">Causal MMM</th>
+              <th class="p-3 text-right text-rose-400">Platform Bias %</th>
+              <th class="p-3 text-right text-emerald-400">Inc. CAC</th>
+            </tr>
+          </thead>
+          <tbody id="triangulation-tbody" class="divide-y divide-supabase-border text-slate-300">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="max-w-7xl mx-auto mt-12 pt-6 border-t border-supabase-border text-center text-xs text-slate-500">
+    <p>
+      Crafted by <strong class="text-slate-300">Ihsan Tri Wanda</strong> (<a href="https://github.com/itw-code" class="text-emerald-400 hover:underline">@itw-code</a>) • Analytics Engineering &amp; Causal Marketing Measurement
+    </p>
+    <p class="mt-1 text-slate-600 font-mono text-[11px]">
+      Built with dbt-duckdb, DuckDB, Chart.js, and GitHub Pages CI/CD
+    </p>
+  </footer>
+
+  <!-- ==================== LOGIC & CHARTS ==================== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const data = window.__DASHBOARD_DATA__;
+      if (!data) {
+        console.warn("No local data found. Loading from data.json...");
+        fetch("data.json")
+          .then(res => res.json())
+          .then(initDashboard)
+          .catch(err => console.error("Failed to load dashboard data:", err));
+      } else {
+        initDashboard(data);
+      }
+    });
+
+    function initDashboard(data) {
+      // 1. Populate KPIs
+      const kpi = data.kpi_summary;
+      if (kpi) {
+        document.getElementById("kpi-bias").textContent = (kpi.platform_bias_pct > 0 ? "+" : "") + kpi.platform_bias_pct + "% BIAS";
+        document.getElementById("kpi-causal").textContent = Number(kpi.total_causal_conversions).toLocaleString();
+        document.getElementById("kpi-platform").textContent = Number(kpi.total_platform_conversions).toLocaleString();
+        document.getElementById("kpi-inc-cac").textContent = "$" + Number(kpi.incremental_cac).toFixed(2);
+        document.getElementById("kpi-blended-cac").textContent = "$" + Number(kpi.blended_cac).toFixed(2);
+        document.getElementById("kpi-roas").textContent = Number(kpi.marginal_roas).toFixed(2) + "x";
+        document.getElementById("kpi-payback").textContent = Number(kpi.payback_months).toFixed(1);
+      }
+
+      // 2. Populate Live Telemetry
+      const live = data.live_telemetry;
+      if (live && live.github) {
+        document.getElementById("live-stars").textContent = Number(live.github.stars || 109204).toLocaleString();
+        document.getElementById("live-forks").textContent = Number(live.github.forks || 13765).toLocaleString();
+        document.getElementById("live-issues").textContent = Number(live.github.open_issues || 1139).toLocaleString();
+      }
+      if (live && live.hackernews_top5) {
+        const hnContainer = document.getElementById("hn-stories-list");
+        hnContainer.innerHTML = live.hackernews_top5.slice(0, 3).map(s => `
+          <div class="truncate text-slate-400 hover:text-slate-200">
+            • <span class="text-white font-medium">${s.title}</span>
+            <span class="text-emerald-400 font-mono text-[10px]">(${s.points} pts)</span>
+          </div>
+        `).join("");
+      }
+
+      // 3. Chart 1: Attribution Triangulation
+      const channels = data.channel_totals ? data.channel_totals.map(c => c.channel) : ['paid_search', 'paid_social', 'developer_sponsorship', 'community_events', 'organic_direct'];
+      const platformTotals = channels.map(ch => {
+        const rows = data.triangulation_daily.filter(r => r.channel === ch);
+        return rows.reduce((acc, r) => acc + (r.platform_reported_conversions || 0), 0);
+      });
+      const mtaFtTotals = channels.map(ch => {
+        const rows = data.triangulation_daily.filter(r => r.channel === ch);
+        return rows.reduce((acc, r) => acc + (r.mta_first_touch_conversions || 0), 0);
+      });
+      const mtaLtTotals = channels.map(ch => {
+        const rows = data.triangulation_daily.filter(r => r.channel === ch);
+        return rows.reduce((acc, r) => acc + (r.mta_last_touch_conversions || 0), 0);
+      });
+      const mmmTotals = channels.map(ch => {
+        const rows = data.triangulation_daily.filter(r => r.channel === ch);
+        return Math.round(rows.reduce((acc, r) => acc + (r.mmm_estimated_incremental_conversions || 0), 0));
+      });
+
+      new Chart(document.getElementById("triangulationChart"), {
+        type: "bar",
+        data: {
+          labels: channels.map(c => c.replace("_", " ")),
+          datasets: [
+            {
+              label: "Platform Claimed",
+              data: platformTotals,
+              backgroundColor: "#f43f5e",
+              borderRadius: 4
+            },
+            {
+              label: "MTA First-Touch",
+              data: mtaFtTotals,
+              backgroundColor: "#38bdf8",
+              borderRadius: 4
+            },
+            {
+              label: "MTA Last-Touch",
+              data: mtaLtTotals,
+              backgroundColor: "#a855f7",
+              borderRadius: 4
+            },
+            {
+              label: "Causal MMM",
+              data: mmmTotals,
+              backgroundColor: "#10b981",
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: "#94a3b8", font: { family: 'Plus Jakarta Sans', size: 11 } }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: "#64748b" } },
+            y: { grid: { color: "#1e293b" }, ticks: { color: "#64748b" } }
+          }
+        }
+      });
+
+      // 4. Chart 2: Saturation Curve
+      if (data.saturation_curve) {
+        new Chart(document.getElementById("saturationChart"), {
+          type: "line",
+          data: {
+            labels: data.saturation_curve.map(p => "$" + p.spend_usd),
+            datasets: [{
+              label: "Estimated Conversions",
+              data: data.saturation_curve.map(p => p.estimated_conversions),
+              borderColor: "#3ecf8e",
+              backgroundColor: "rgba(62, 207, 142, 0.1)",
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: "#3ecf8e"
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              x: { grid: { display: false }, ticks: { color: "#64748b" } },
+              y: { grid: { color: "#1e293b" }, ticks: { color: "#64748b" } }
+            }
+          }
+        });
+      }
+
+      // 5. Chart 3: Retention Cohorts
+      if (data.retention_cohorts && data.retention_cohorts.length > 0) {
+        const recentCohorts = data.retention_cohorts.slice(0, 8).reverse();
+        new Chart(document.getElementById("retentionChart"), {
+          type: "line",
+          data: {
+            labels: recentCohorts.map(c => c.cohort_week.split(" ")[0]),
+            datasets: [
+              {
+                label: "Day 7 Activation %",
+                data: recentCohorts.map(c => c.day_7_activation_rate_pct),
+                borderColor: "#38bdf8",
+                tension: 0.3
+              },
+              {
+                label: "Day 30 Retention %",
+                data: recentCohorts.map(c => c.day_30_retention_rate_pct),
+                borderColor: "#10b981",
+                tension: 0.3
+              },
+              {
+                label: "Pro Conversion %",
+                data: recentCohorts.map(c => c.pro_conversion_rate_pct),
+                borderColor: "#f59e0b",
+                tension: 0.3
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { labels: { color: "#94a3b8" } }
+            },
+            scales: {
+              x: { grid: { display: false }, ticks: { color: "#64748b" } },
+              y: { grid: { color: "#1e293b" }, ticks: { color: "#64748b", callback: v => v + "%" } }
+            }
+          }
+        });
+      }
+
+      // 6. Data Explorer Table
+      const tbody = document.getElementById("triangulation-tbody");
+      const filterSelect = document.getElementById("channelFilter");
+
+      function renderTable(filterVal) {
+        const rows = (data.triangulation_daily || []).filter(r => {
+          return filterVal === "all" || r.channel === filterVal;
+        });
+
+        tbody.innerHTML = rows.slice(0, 50).map(r => `
+          <tr class="hover:bg-supabase-card/50 transition">
+            <td class="p-3 text-slate-400">${r.date_day}</td>
+            <td class="p-3 font-semibold text-white">${r.channel}</td>
+            <td class="p-3 text-right font-medium">$${Number(r.spend_usd).toFixed(2)}</td>
+            <td class="p-3 text-right text-rose-400">${r.platform_reported_conversions}</td>
+            <td class="p-3 text-right text-sky-400">${r.mta_first_touch_conversions}</td>
+            <td class="p-3 text-right text-purple-400">${r.mta_last_touch_conversions}</td>
+            <td class="p-3 text-right text-emerald-400 font-bold">${r.mmm_estimated_incremental_conversions}</td>
+            <td class="p-3 text-right text-rose-400 font-bold">${r.platform_overreporting_bias_pct > 0 ? "+" : ""}${r.platform_overreporting_bias_pct}%</td>
+            <td class="p-3 text-right text-emerald-400 font-bold">$${r.incremental_cac_usd}</td>
+          </tr>
+        `).join("");
+      }
+
+      renderTable("all");
+      filterSelect.addEventListener("change", e => renderTable(e.target.value));
+    }
+  </script>
+</body>
+</html>
