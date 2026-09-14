@@ -2,10 +2,13 @@
 ## Causal Attribution Triangulation, Media Mix Modeling & Developer PLG Telemetry
 
 [![CI Pipeline](https://github.com/itw-code/developer-marketing-measurement-dbt/actions/workflows/dbt.yml/badge.svg)](https://github.com/itw-code/developer-marketing-measurement-dbt/actions)
+[![Deploy Pages](https://github.com/itw-code/developer-marketing-measurement-dbt/actions/workflows/pages.yml/badge.svg)](https://github.com/itw-code/developer-marketing-measurement-dbt/actions/workflows/pages.yml)
+[![Live Dashboard](https://img.shields.io/badge/Live%20Showcase-GitHub%20Pages-3ecf8e.svg)](https://itw-code.github.io/developer-marketing-measurement-dbt/)
 [![dbt-duckdb](https://img.shields.io/badge/dbt--duckdb-1.10.1-blue.svg)](https://github.com/duckdb/dbt-duckdb)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
 [![Author: itw-code](https://img.shields.io/badge/Author-Ihsan%20Tri%20Wanda-059669.svg)](https://github.com/itw-code)
 
+> **Interactive Live Executive Showcase**: [https://itw-code.github.io/developer-marketing-measurement-dbt/](https://itw-code.github.io/developer-marketing-measurement-dbt/)
 An open-source, production-grade analytics engineering pipeline built to solve the **marketing measurement crisis in developer tooling, open-source ecosystems, and Backend-as-a-Service (BaaS) platforms**.
 
 Rather than relying on platform-reported vanity metrics from walled gardens (Google Ads, Meta, LinkedIn) that over-claim conversions by 300%–700%, this project implements **Attribution Triangulation**: reconciling Multi-Touch Attribution (MTA), Media Mix Modeling (MMM with adstock and saturation dynamics), and always-on Incrementality experiments (geo-lift and universal holdouts) into a unified, tested semantic layer.
