@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,7 +10,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <!-- Load Local Data for Zero-CORS viewing -->
   <script src="data.js"></script>
   <script>
@@ -19,18 +19,19 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+            display: ['Newsreader', 'Georgia', 'serif'],
           },
           colors: {
             supabase: {
-              DEFAULT: '#3ecf8e',
-              dark: '#10b981',
-              darker: '#059669',
-              bg: '#0c1017',
-              panel: '#151c28',
-              card: '#1b2434',
-              border: '#263347'
+              DEFAULT: '#1F7A80',
+              dark: '#1F7A80',
+              darker: '#155e63',
+              bg: '#F7F4EE',
+              panel: '#FCFAF6',
+              card: '#EFEBE1',
+              border: '#DDD7CB'
             }
           }
         }
@@ -39,24 +40,25 @@
   </script>
   <style>
     body {
-      background-color: #0c1017;
-      color: #e2e8f0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #F7F4EE;
+      color: #22262B;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
     }
-    .custom-scroll::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    .custom-scroll::-webkit-scrollbar-track {
-      background: #151c28;
-    }
-    .custom-scroll::-webkit-scrollbar-thumb {
-      background: #263347;
-      border-radius: 3px;
-    }
-    .custom-scroll::-webkit-scrollbar-thumb:hover {
-      background: #3ecf8e;
-    }
+    h1, h2 { font-family: Newsreader, Georgia, serif; }
+    .text-white { color: #22262B !important; }
+    .text-slate-300, .text-slate-400, .text-slate-500 { color: #5B636B !important; }
+    .text-emerald-400, .text-emerald-500 { color: #1F7A80 !important; }
+    .text-rose-400 { color: #9B4A44 !important; }
+    .text-sky-400 { color: #1F7A80 !important; }
+    .text-purple-400 { color: #8C4A6B !important; }
+    .text-amber-400 { color: #7A5F28 !important; }
+    .shadow-lg { box-shadow: 0 1px 2px rgba(34,38,43,.06) !important; }
+    .rounded-xl, .rounded-lg { border-radius: 4px !important; }
+    .rounded-full { border-radius: 3px !important; }
+    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #EFEBE1; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #C9C1B2; border-radius: 3px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #1F7A80; }
   </style>
 </head>
 <body class="min-h-screen p-4 md:p-8 custom-scroll">
@@ -66,10 +68,10 @@
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-supabase-border pb-6">
       <div>
         <div class="flex items-center gap-3 mb-2">
-          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-mono font-bold text-lg">
-            ⚡
+          <div class="w-8 h-8 rounded-sm bg-teal-50 border border-[#DDD7CB] flex items-center justify-center text-[#1F7A80] font-mono font-bold text-sm">
+            dbt
           </div>
-          <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">
+          <h1 class="text-2xl md:text-3xl font-medium tracking-tight text-white">
             Developer Marketing Measurement &amp; Attribution Triangulation
           </h1>
         </div>
@@ -388,25 +390,25 @@
             {
               label: "Platform Claimed",
               data: platformTotals,
-              backgroundColor: "#f43f5e",
+              backgroundColor: "#9B4A44",
               borderRadius: 4
             },
             {
               label: "MTA First-Touch",
               data: mtaFtTotals,
-              backgroundColor: "#38bdf8",
+              backgroundColor: "#1F7A80",
               borderRadius: 4
             },
             {
               label: "MTA Last-Touch",
               data: mtaLtTotals,
-              backgroundColor: "#a855f7",
+              backgroundColor: "#8C4A6B",
               borderRadius: 4
             },
             {
               label: "Causal MMM",
               data: mmmTotals,
-              backgroundColor: "#10b981",
+              backgroundColor: "#1F7A80",
               borderRadius: 4
             }
           ]
@@ -416,12 +418,12 @@
           maintainAspectRatio: false,
           plugins: {
             legend: {
-              labels: { color: "#94a3b8", font: { family: 'Plus Jakarta Sans', size: 11 } }
+              labels: { color: "#5B636B", font: { family: 'Inter', size: 11 } }
             }
           },
           scales: {
-            x: { grid: { display: false }, ticks: { color: "#64748b" } },
-            y: { grid: { color: "#1e293b" }, ticks: { color: "#64748b" } }
+            x: { grid: { display: false }, ticks: { color: "#5B636B" } },
+            y: { grid: { color: "#DDD7CB" }, ticks: { color: "#5B636B" } }
           }
         }
       });
@@ -435,11 +437,11 @@
             datasets: [{
               label: "Estimated Conversions",
               data: data.saturation_curve.map(p => p.estimated_conversions),
-              borderColor: "#3ecf8e",
-              backgroundColor: "rgba(62, 207, 142, 0.1)",
+              borderColor: "#1F7A80",
+              backgroundColor: "rgba(31, 122, 128, 0.1)",
               fill: true,
               tension: 0.4,
-              pointBackgroundColor: "#3ecf8e"
+              pointBackgroundColor: "#1F7A80"
             }]
           },
           options: {
@@ -449,8 +451,8 @@
               legend: { display: false }
             },
             scales: {
-              x: { grid: { display: false }, ticks: { color: "#64748b" } },
-              y: { grid: { color: "#1e293b" }, ticks: { color: "#64748b" } }
+              x: { grid: { display: false }, ticks: { color: "#5B636B" } },
+              y: { grid: { color: "#DDD7CB" }, ticks: { color: "#5B636B" } }
             }
           }
         });
@@ -467,19 +469,19 @@
               {
                 label: "Day 7 Activation %",
                 data: recentCohorts.map(c => c.day_7_activation_rate_pct),
-                borderColor: "#38bdf8",
+                borderColor: "#1F7A80",
                 tension: 0.3
               },
               {
                 label: "Day 30 Retention %",
                 data: recentCohorts.map(c => c.day_30_retention_rate_pct),
-                borderColor: "#10b981",
+                borderColor: "#3F6B52",
                 tension: 0.3
               },
               {
                 label: "Pro Conversion %",
                 data: recentCohorts.map(c => c.pro_conversion_rate_pct),
-                borderColor: "#f59e0b",
+                borderColor: "#8C4A6B",
                 tension: 0.3
               }
             ]
@@ -488,11 +490,11 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-              legend: { labels: { color: "#94a3b8" } }
+              legend: { labels: { color: "#5B636B" } }
             },
             scales: {
-              x: { grid: { display: false }, ticks: { color: "#64748b" } },
-              y: { grid: { color: "#1e293b" }, ticks: { color: "#64748b", callback: v => v + "%" } }
+              x: { grid: { display: false }, ticks: { color: "#5B636B" } },
+              y: { grid: { color: "#DDD7CB" }, ticks: { color: "#5B636B", callback: v => v + "%" } }
             }
           }
         });
